@@ -16,9 +16,11 @@
           formControlName="name"
           (blur)="blur()"
         />
-        <span class="invalid-feedback" *ngIf="displayMessage.name">
-          {{ displayMessage.name }}
-        </span>
+        <mat-error *ngIf="displayMessage.name">
+          <span>
+            {{ displayMessage.name }}
+          </span>
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field class="form-field" appearance="outline">
@@ -33,9 +35,11 @@
           formControlName="team"
           (blur)="blur()"
         />
-        <span class="invalid-feedback" *ngIf="displayMessage.team">
-          {{ displayMessage.team }}
-        </span>
+        <mat-error *ngIf="displayMessage.team">
+          <span>
+            {{ displayMessage.team }}
+          </span>
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field class="form-field" appearance="outline">
@@ -49,9 +53,11 @@
           placeholder="Strength"
           formControlName="strength"
         />
-        <span class="invalid-feedback" *ngIf="displayMessage.strength">
-          {{ displayMessage.strength }}
-        </span>
+        <mat-error *ngIf="displayMessage.strength">
+          <span>
+            {{ displayMessage.strength }}
+          </span>
+        </mat-error>
       </mat-form-field>
 
       <mat-form-field class="form-field" appearance="outline">
@@ -66,9 +72,11 @@
           formControlName="description"
         >
         </textarea>
-        <span class="invalid-feedback" *ngIf="displayMessage.description">
-          {{ displayMessage.description }}
-        </span>
+        <mat-error *ngIf="displayMessage.description">
+          <span>
+            {{ displayMessage.description }}
+          </span>
+        </mat-error>
       </mat-form-field>
 
       <button

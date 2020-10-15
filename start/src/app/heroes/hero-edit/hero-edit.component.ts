@@ -96,7 +96,7 @@ export class HeroEditComponent implements OnInit {
 
   deleteHero(hero: Hero): void {
     if (hero && hero.id) {
-      if (confirm(`Really delete the hero: ${hero.name}?`)) {
+      if (confirm(`Do you really want to delete the hero: ${hero.name}?`)) {
         this.heroService.deleteHero(hero.id).subscribe({
           next: () => this.heroService.changeSelectedHero(null),
         });
