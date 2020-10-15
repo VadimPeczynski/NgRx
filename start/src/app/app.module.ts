@@ -6,6 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HeroesModule } from './heroes/heroes.module';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AppComponent],
@@ -15,6 +16,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
     FlexLayoutModule,
     HeroesModule,
     MatToolbarModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

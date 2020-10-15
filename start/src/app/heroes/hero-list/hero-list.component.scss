@@ -1,0 +1,7 @@
+.footer-margin {
+  margin: 12px;
+}
+
+:host ::ng-deep .mat-checkbox-layout {
+  white-space: normal !important;
+}

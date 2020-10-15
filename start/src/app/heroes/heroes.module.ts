@@ -4,10 +4,27 @@ import { HeroesComponent } from '../heroes/heroes.component';
 import { HeroListComponent } from './hero-list/hero-list.component';
 import { HeroEditComponent } from './hero-edit/hero-edit.component';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatButtonModule } from '@angular/material/button';
+import { MatCardModule } from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
 
 @NgModule({
   declarations: [HeroesComponent, HeroListComponent, HeroEditComponent],
   exports: [HeroesComponent],
-  imports: [CommonModule, FlexLayoutModule],
+  imports: [
+    CommonModule,
+    FlexLayoutModule,
+    MatButtonModule,
+    MatCardModule,
+    MatCheckboxModule,
+    MatFormFieldModule,
+    MatGridListModule,
+    MatInputModule,
+    MatListModule,
+  ],
 })
 export class HeroesModule {}
