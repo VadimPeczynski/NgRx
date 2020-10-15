@@ -1,0 +1,41 @@
+<mat-card [style.height.vh]="52">
+  <mat-card-header>
+    <mat-card-title>{{ pageTitle }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content
+    *ngIf="heroes?.length"
+    [style.overflow]="'auto'"
+    [style.height.vh]="40"
+  >
+    <mat-selection-list
+      [multiple]="false"
+      (selectionChange)="heroSelected($event)"
+    >
+      <mat-list-option *ngFor="let hero of heroes" [value]="hero">
+        {{ hero.name }}
+        <ng-container *ngIf="displayTeam"> ({{ hero.team }}) </ng-container>
+      </mat-list-option>
+    </mat-selection-list>
+  </mat-card-content>
+  <mat-card-footer>
+    <div fxLayout="row">
+      <mat-checkbox
+        class="footer-margin"
+        [checked]="displayTeam"
+        (change)="checkChanged()"
+        fxFlex="50%"
+      >
+        Display Team
+      </mat-checkbox>
+      <button
+        class="footer-margin"
+        mat-raised-button
+        color="primary"
+        (click)="newHero()"
+        fxFlex="35%"
+      >
+        Add
+      </button>
+    </div>
+  </mat-card-footer>
+</mat-card>
