@@ -1,7 +1,7 @@
 export interface Hero {
-  Id: number;
-  Name: string;
-  Team: string;
-  Strength: number;
-  Description: string;
+  id: number;
+  name: string;
+  team: string;
+  strength: number;
+  description: string;
 }
