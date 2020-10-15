@@ -58,8 +58,8 @@ export class HeroService {
     return this.http
       .put<Hero>(url, hero, { headers })
       .pipe(
-        tap((data) => console.log('updateHero: ' + hero.id)),
-        tap((data) => {
+        tap(() => console.log('updateHero: ' + hero.id)),
+        tap(() => {
           const foundIndex = this.heroes.findIndex(
             (item) => item.id === hero.id
           );
