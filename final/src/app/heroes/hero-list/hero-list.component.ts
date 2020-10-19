@@ -5,6 +5,7 @@ import { HeroService } from '../hero.service';
 import { Hero } from '../hero.model';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/state/app.state';
+import { getDisplayTeam } from '../state/hero.selectors';
 
 @Component({
   selector: 'app-hero-list',
@@ -25,8 +26,8 @@ export class HeroListComponent implements OnInit {
       next: (heroes: Hero[]) => (this.heroes = heroes),
     });
 
-    this.store.select('heroes').subscribe((heroes) => {
-      this.displayTeam = heroes.displayTeam;
+    this.store.select(getDisplayTeam).subscribe((displayTeam) => {
+      this.displayTeam = displayTeam;
     });
   }
 
