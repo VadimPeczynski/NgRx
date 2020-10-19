@@ -13,6 +13,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { ReactiveFormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
+import { heroReducer } from './state/hero.reducer';
 
 @NgModule({
   declarations: [HeroesComponent, HeroListComponent, HeroEditComponent],
@@ -28,7 +29,7 @@ import { StoreModule } from '@ngrx/store';
     MatInputModule,
     MatListModule,
     ReactiveFormsModule,
-    StoreModule.forFeature('heroes', {}),
+    StoreModule.forFeature('heroes', heroReducer),
   ],
 })
 export class HeroesModule {}
