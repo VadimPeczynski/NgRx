@@ -3,6 +3,7 @@ import { MatSelectionListChange } from '@angular/material/list';
 import { Subscription } from 'rxjs';
 import { HeroService } from '../hero.service';
 import { Hero } from '../hero.model';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-hero-list',
@@ -16,11 +17,17 @@ export class HeroListComponent implements OnInit {
 
   heroes: Hero[] = [];
   sub = new Subscription();
-  constructor(private heroService: HeroService) {}
+  constructor(private store: Store<any>, private heroService: HeroService) {}
 
   ngOnInit(): void {
     this.heroService.getHeroes().subscribe({
       next: (heroes: Hero[]) => (this.heroes = heroes),
+    });
+
+    this.store.select('heroes').subscribe((heroes) => {
+      if (heroes) {
+        this.displayTeam = heroes.displayTeam;
+      }
     });
   }
 
@@ -29,7 +36,7 @@ export class HeroListComponent implements OnInit {
   }
 
   checkChanged(): void {
-    this.displayTeam = !this.displayTeam;
+    this.store.dispatch({ type: '[Hero] Toggle Team Display' });
   }
 
   newHero(): void {
