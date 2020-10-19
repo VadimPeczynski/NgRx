@@ -26,9 +26,7 @@ export class HeroListComponent implements OnInit {
     });
 
     this.store.select('heroes').subscribe((heroes) => {
-      if (heroes) {
-        this.displayTeam = heroes.displayTeam;
-      }
+      this.displayTeam = heroes.displayTeam;
     });
   }
 
