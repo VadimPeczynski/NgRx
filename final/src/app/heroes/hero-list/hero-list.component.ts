@@ -4,6 +4,7 @@ import { Subscription } from 'rxjs';
 import { HeroService } from '../hero.service';
 import { Hero } from '../hero.model';
 import { Store } from '@ngrx/store';
+import { State } from 'src/app/state/app.state';
 
 @Component({
   selector: 'app-hero-list',
@@ -17,7 +18,7 @@ export class HeroListComponent implements OnInit {
 
   heroes: Hero[] = [];
   sub = new Subscription();
-  constructor(private store: Store<any>, private heroService: HeroService) {}
+  constructor(private store: Store<State>, private heroService: HeroService) {}
 
   ngOnInit(): void {
     this.heroService.getHeroes().subscribe({
