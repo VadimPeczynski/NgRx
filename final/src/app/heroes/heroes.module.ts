@@ -12,6 +12,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { ReactiveFormsModule } from '@angular/forms';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [HeroesComponent, HeroListComponent, HeroEditComponent],
@@ -26,7 +27,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MatGridListModule,
     MatInputModule,
     MatListModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    StoreModule.forFeature('heroes', {}),
   ],
 })
 export class HeroesModule {}

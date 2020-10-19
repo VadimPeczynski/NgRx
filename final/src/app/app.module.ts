@@ -9,6 +9,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { HeroData } from './heroes/hero-data.service';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,6 +23,7 @@ import { HeroData } from './heroes/hero-data.service';
     HttpClientInMemoryWebApiModule.forRoot(HeroData, {
       dataEncapsulation: false,
     }),
+    StoreModule.forRoot({}, {}),
   ],
   providers: [],
   bootstrap: [AppComponent],
