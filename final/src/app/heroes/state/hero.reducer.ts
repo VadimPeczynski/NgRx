@@ -6,6 +6,7 @@ const initialState: HeroState = {
   displayTeam: true,
   currentHero: null,
   heroes: [],
+  error: '',
 };
 
 export const heroReducer = createReducer<HeroState>(
@@ -49,6 +50,26 @@ export const heroReducer = createReducer<HeroState>(
           description: '',
           strength: 0,
         },
+      };
+    }
+  ),
+  on(
+    HeroActions.loadHeroesSuccess,
+    (state, action): HeroState => {
+      return {
+        ...state,
+        heroes: action.heroes,
+        error: '',
+      };
+    }
+  ),
+  on(
+    HeroActions.loadHeroesFailure,
+    (state, action): HeroState => {
+      return {
+        ...state,
+        heroes: [],
+        error: action.error,
       };
     }
   )

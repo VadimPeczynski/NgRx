@@ -10,4 +10,5 @@ export interface HeroState {
   displayTeam: boolean;
   currentHero: Hero;
   heroes: Hero[];
+  error: string;
 }

@@ -17,3 +17,8 @@ export const getHeroes = createSelector(
   getHeroFeatureState,
   (state) => state.heroes
 );
+
+export const getError = createSelector(
+  getHeroFeatureState,
+  (state) => state.error
+);

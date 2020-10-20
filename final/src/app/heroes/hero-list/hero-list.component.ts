@@ -1,33 +1,43 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MatSelectionListChange } from '@angular/material/list';
-import { HeroService } from '../hero.service';
 import { Hero } from '../hero.model';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/state/app.state';
-import { getDisplayTeam } from '../state/hero.selectors';
+import { getDisplayTeam, getError, getHeroes } from '../state/hero.selectors';
 import * as HeroActions from '../state/hero.actions';
+import { Observable, Subscription } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-hero-list',
   templateUrl: './hero-list.component.html',
   styleUrls: ['./hero-list.component.scss'],
 })
-export class HeroListComponent implements OnInit {
+export class HeroListComponent implements OnInit, OnDestroy {
   pageTitle = 'Heroes';
 
-  displayTeam: boolean;
+  heroes$: Observable<Hero[]>;
+  displayTeam$: Observable<boolean>;
+  errorSub: Subscription = new Subscription();
 
-  heroes: Hero[] = [];
-  constructor(private store: Store<State>, private heroService: HeroService) {}
+  constructor(private store: Store<State>, private _snackBar: MatSnackBar) {}
 
   ngOnInit(): void {
-    this.heroService.getHeroes().subscribe({
-      next: (heroes: Hero[]) => (this.heroes = heroes),
-    });
+    this.store.dispatch(HeroActions.loadHeroes());
 
-    this.store.select(getDisplayTeam).subscribe((displayTeam) => {
-      this.displayTeam = displayTeam;
+    this.heroes$ = this.store.select(getHeroes);
+
+    this.displayTeam$ = this.store.select(getDisplayTeam);
+
+    this.errorSub = this.store.select(getError).subscribe((error) => {
+      if (error) {
+        this._snackBar.open(error, 'Close');
+      }
     });
+  }
+
+  ngOnDestroy(): void {
+    this.errorSub.unsubscribe();
   }
 
   checkChanged(): void {

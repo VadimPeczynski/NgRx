@@ -5,3 +5,8 @@
 :host ::ng-deep .mat-checkbox-layout {
   white-space: normal !important;
 }
+
+.card-content {
+  overflow: auto;
+  height: 40vh;
+}

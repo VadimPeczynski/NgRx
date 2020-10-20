@@ -1,4 +1,7 @@
-<mat-card *ngIf="hero" [style.height.vh]="52">
+<mat-card
+  *ngIf="hero$ | async as hero"
+  class="card"
+>
   <mat-card-header>
     <mat-card-title>{{ pageTitle }}</mat-card-title>
   </mat-card-header>

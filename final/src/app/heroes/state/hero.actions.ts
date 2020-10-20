@@ -8,3 +8,12 @@ export const setCurrentHero = createAction(
 );
 export const clearCurrentHero = createAction('[Hero] Clear Current Hero');
 export const initCurrentHero = createAction('[Hero] Init Current Hero');
+export const loadHeroes = createAction('[Hero] Load');
+export const loadHeroesSuccess = createAction(
+  '[Hero] Load Success',
+  props<{ heroes: Hero[] }>()
+);
+export const loadHeroesFailure = createAction(
+  '[Hero] Load Failure',
+  props<{ error: string }>()
+);

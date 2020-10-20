@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { State } from 'src/app/state/app.state';
 import { Hero } from '../hero.model';
 import { HeroService } from '../hero.service';
@@ -9,6 +9,7 @@ import { GenericValidator } from './validators/generic.validator';
 import { NumberValidators } from './validators/number.validator';
 import * as HeroActions from '../state/hero.actions';
 import { getCurrentHero } from '../state/hero.selectors';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-hero-edit',
@@ -23,6 +24,7 @@ export class HeroEditComponent implements OnInit {
   displayMessage: { [key: string]: string } = {};
   private genericValidator: GenericValidator;
   sub: Subscription = new Subscription();
+  hero$: Observable<Hero>;
 
   constructor(
     private store: Store<State>,
@@ -61,9 +63,9 @@ export class HeroEditComponent implements OnInit {
       description: '',
     });
 
-    this.store
+    this.hero$ = this.store
       .select(getCurrentHero)
-      .subscribe((currentHero) => this.displayHero(currentHero));
+      .pipe(tap((currentHero) => this.displayHero(currentHero)));
 
     this.heroForm.valueChanges.subscribe(
       () =>
@@ -78,8 +80,6 @@ export class HeroEditComponent implements OnInit {
   }
 
   displayHero(hero: Hero): void {
-    this.hero = hero;
-
     if (hero) {
       this.heroForm.reset();
 
