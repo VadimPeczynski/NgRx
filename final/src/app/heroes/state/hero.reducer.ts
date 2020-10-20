@@ -1,4 +1,4 @@
-import { createAction, createReducer, on } from '@ngrx/store';
+import { createReducer, on } from '@ngrx/store';
 import { HeroState } from './hero.state';
 import * as HeroActions from './hero.actions';
 

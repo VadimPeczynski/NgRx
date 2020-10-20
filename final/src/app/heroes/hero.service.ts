@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Hero } from './hero.model';
 import { map, tap } from 'rxjs/operators';
 
@@ -11,24 +11,7 @@ export class HeroService {
   private heroesUrl = 'api/heroes';
   private heroes: Hero[];
 
-  private selectedHeroSource = new BehaviorSubject<Hero>(null);
-  selectedHeroChanges$ = this.selectedHeroSource.asObservable();
-
   constructor(private http: HttpClient) {}
-
-  newHero(): Hero {
-    return {
-      id: 0,
-      name: '',
-      team: '',
-      description: '',
-      strength: 0,
-    };
-  }
-
-  changeSelectedHero(selectedHero: Hero): void {
-    this.selectedHeroSource.next(selectedHero);
-  }
 
   getHeroes(): Observable<Hero[]> {
     if (this.heroes) {

@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
+import { State } from 'src/app/state/app.state';
 import { Hero } from '../hero.model';
 import { HeroService } from '../hero.service';
 import { GenericValidator } from './validators/generic.validator';
 import { NumberValidators } from './validators/number.validator';
+import * as HeroActions from '../state/hero.actions';
+import { getCurrentHero } from '../state/hero.selectors';
 
 @Component({
   selector: 'app-hero-edit',
@@ -20,7 +24,11 @@ export class HeroEditComponent implements OnInit {
   private genericValidator: GenericValidator;
   sub: Subscription = new Subscription();
 
-  constructor(private heroService: HeroService, private fb: FormBuilder) {
+  constructor(
+    private store: Store<State>,
+    private heroService: HeroService,
+    private fb: FormBuilder
+  ) {
     const validationMessages = {
       name: {
         required: 'Hero name is required.',
@@ -53,9 +61,9 @@ export class HeroEditComponent implements OnInit {
       description: '',
     });
 
-    this.sub = this.heroService.selectedHeroChanges$.subscribe((currentHero) =>
-      this.displayHero(currentHero)
-    );
+    this.store
+      .select(getCurrentHero)
+      .subscribe((currentHero) => this.displayHero(currentHero));
 
     this.heroForm.valueChanges.subscribe(
       () =>
@@ -98,11 +106,11 @@ export class HeroEditComponent implements OnInit {
     if (hero && hero.id) {
       if (confirm(`Do you really want to delete the hero: ${hero.name}?`)) {
         this.heroService.deleteHero(hero.id).subscribe({
-          next: () => this.heroService.changeSelectedHero(null),
+          next: () => this.store.dispatch(HeroActions.clearCurrentHero()),
         });
       }
     } else {
-      this.heroService.changeSelectedHero(null);
+      this.store.dispatch(HeroActions.clearCurrentHero());
     }
   }
 
@@ -113,11 +121,13 @@ export class HeroEditComponent implements OnInit {
 
         if (hero.id === 0) {
           this.heroService.createHero(hero).subscribe({
-            next: (hero) => this.heroService.changeSelectedHero(hero),
+            next: (hero) =>
+              this.store.dispatch(HeroActions.setCurrentHero({ hero })),
           });
         } else {
           this.heroService.updateHero(hero).subscribe({
-            next: (hero) => this.heroService.changeSelectedHero(hero),
+            next: (hero) =>
+              this.store.dispatch(HeroActions.setCurrentHero({ hero })),
           });
         }
       }
