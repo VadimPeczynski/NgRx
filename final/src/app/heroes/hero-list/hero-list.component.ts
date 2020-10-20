@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { MatSelectionListChange } from '@angular/material/list';
-import { Subscription } from 'rxjs';
 import { HeroService } from '../hero.service';
 import { Hero } from '../hero.model';
 import { Store } from '@ngrx/store';
 import { State } from 'src/app/state/app.state';
 import { getDisplayTeam } from '../state/hero.selectors';
+import * as HeroActions from '../state/hero.actions';
 
 @Component({
   selector: 'app-hero-list',
@@ -18,7 +18,6 @@ export class HeroListComponent implements OnInit {
   displayTeam: boolean;
 
   heroes: Hero[] = [];
-  sub = new Subscription();
   constructor(private store: Store<State>, private heroService: HeroService) {}
 
   ngOnInit(): void {
@@ -31,19 +30,17 @@ export class HeroListComponent implements OnInit {
     });
   }
 
-  ngOnDestroy(): void {
-    this.sub.unsubscribe();
-  }
-
   checkChanged(): void {
-    this.store.dispatch({ type: '[Hero] Toggle Team Display' });
+    this.store.dispatch(HeroActions.toggleDisplayTeam());
   }
 
   newHero(): void {
-    this.heroService.changeSelectedHero(this.heroService.newHero());
+    this.store.dispatch(HeroActions.initCurrentHero());
   }
 
   heroSelected(event: MatSelectionListChange): void {
-    this.heroService.changeSelectedHero(event.option.value);
+    this.store.dispatch(
+      HeroActions.setCurrentHero({ hero: event.option.value })
+    );
   }
 }
