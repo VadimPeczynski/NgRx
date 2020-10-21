@@ -50,7 +50,7 @@ export class HeroListComponent implements OnInit, OnDestroy {
 
   heroSelected(event: MatSelectionListChange): void {
     this.store.dispatch(
-      HeroActions.setCurrentHero({ hero: event.option.value })
+      HeroActions.setCurrentHero({ currentHeroId: event.option.value.id })
     );
   }
 }

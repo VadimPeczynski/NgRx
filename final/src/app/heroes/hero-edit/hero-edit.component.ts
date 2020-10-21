@@ -122,13 +122,12 @@ export class HeroEditComponent implements OnInit {
         if (hero.id === 0) {
           this.heroService.createHero(hero).subscribe({
             next: (hero) =>
-              this.store.dispatch(HeroActions.setCurrentHero({ hero })),
+              this.store.dispatch(
+                HeroActions.setCurrentHero({ currentHeroId: hero.id })
+              ),
           });
         } else {
-          this.heroService.updateHero(hero).subscribe({
-            next: (hero) =>
-              this.store.dispatch(HeroActions.setCurrentHero({ hero })),
-          });
+          this.store.dispatch(HeroActions.updateHero({ hero }));
         }
       }
     }

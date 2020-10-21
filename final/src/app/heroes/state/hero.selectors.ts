@@ -8,9 +8,31 @@ export const getDisplayTeam = createSelector(
   (state) => state.displayTeam
 );
 
+export const getCurrentHeroId = createSelector(
+  getHeroFeatureState,
+  (state) => state.currentHeroId
+);
+
 export const getCurrentHero = createSelector(
   getHeroFeatureState,
-  (state) => state.currentHero
+  getCurrentHeroId,
+  (state, id) => {
+    if (id === 0) {
+      return {
+        id: 0,
+        name: '',
+        team: '',
+        description: '',
+        strength: 0,
+      };
+    } else {
+      return id
+        ? state.heroes.find((hero) => {
+            return hero.id === id;
+          })
+        : null;
+    }
+  }
 );
 
 export const getHeroes = createSelector(

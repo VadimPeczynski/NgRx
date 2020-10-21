@@ -8,7 +8,7 @@ import { Hero } from '../hero.model';
 
 export interface HeroState {
   displayTeam: boolean;
-  currentHero: Hero;
+  currentHeroId: number;
   heroes: Hero[];
   error: string;
 }

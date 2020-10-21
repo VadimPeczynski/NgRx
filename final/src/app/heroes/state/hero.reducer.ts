@@ -4,7 +4,7 @@ import * as HeroActions from './hero.actions';
 
 const initialState: HeroState = {
   displayTeam: true,
-  currentHero: null,
+  currentHeroId: null,
   heroes: [],
   error: '',
 };
@@ -25,7 +25,7 @@ export const heroReducer = createReducer<HeroState>(
     (state, action): HeroState => {
       return {
         ...state,
-        currentHero: action.hero,
+        currentHeroId: action.currentHeroId,
       };
     }
   ),
@@ -34,7 +34,7 @@ export const heroReducer = createReducer<HeroState>(
     (state): HeroState => {
       return {
         ...state,
-        currentHero: null,
+        currentHeroId: null,
       };
     }
   ),
@@ -43,13 +43,7 @@ export const heroReducer = createReducer<HeroState>(
     (state): HeroState => {
       return {
         ...state,
-        currentHero: {
-          id: 0,
-          name: '',
-          team: '',
-          description: '',
-          strength: 0,
-        },
+        currentHeroId: 0,
       };
     }
   ),
@@ -69,6 +63,29 @@ export const heroReducer = createReducer<HeroState>(
       return {
         ...state,
         heroes: [],
+        error: action.error,
+      };
+    }
+  ),
+  on(
+    HeroActions.updateHeroSuccess,
+    (state, action): HeroState => {
+      const updatedHeroes = state.heroes.map((item) =>
+        action.hero.id === item.id ? action.hero : item
+      );
+      return {
+        ...state,
+        heroes: updatedHeroes,
+        currentHeroId: action.hero.id,
+        error: '',
+      };
+    }
+  ),
+  on(
+    HeroActions.updateHeroFailure,
+    (state, action): HeroState => {
+      return {
+        ...state,
         error: action.error,
       };
     }
