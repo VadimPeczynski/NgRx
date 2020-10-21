@@ -11,6 +11,8 @@ import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { HeroData } from './heroes/hero-data.service';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent],
@@ -26,6 +28,7 @@ import { EffectsModule } from '@ngrx/effects';
     }),
     StoreModule.forRoot({}, {}),
     EffectsModule.forRoot([]),
+    StoreDevtoolsModule.instrument({ name: 'Hero Academy App', maxAge: 25, logOnly: environment.production }),
   ],
   providers: [],
   bootstrap: [AppComponent],
