@@ -89,5 +89,45 @@ export const heroReducer = createReducer<HeroState>(
         error: action.error,
       };
     }
+  ),
+  on(
+    HeroActions.createHeroSuccess,
+    (state, action): HeroState => {
+      return {
+        ...state,
+        heroes: [...state.heroes, action.hero],
+        currentHeroId: action.hero.id,
+        error: '',
+      };
+    }
+  ),
+  on(
+    HeroActions.createHeroFailure,
+    (state, action): HeroState => {
+      return {
+        ...state,
+        error: action.error,
+      };
+    }
+  ),
+  on(
+    HeroActions.deleteHeroSuccess,
+    (state, action): HeroState => {
+      return {
+        ...state,
+        heroes: state.heroes.filter((hero) => hero.id !== action.heroId),
+        currentHeroId: null,
+        error: '',
+      };
+    }
+  ),
+  on(
+    HeroActions.deleteHeroFailure,
+    (state, action): HeroState => {
+      return {
+        ...state,
+        error: action.error,
+      };
+    }
   )
 );

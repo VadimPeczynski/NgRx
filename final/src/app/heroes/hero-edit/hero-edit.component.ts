@@ -4,7 +4,6 @@ import { Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { State } from 'src/app/state/app.state';
 import { Hero } from '../hero.model';
-import { HeroService } from '../hero.service';
 import { GenericValidator } from './validators/generic.validator';
 import { NumberValidators } from './validators/number.validator';
 import * as HeroActions from '../state/hero.actions';
@@ -28,7 +27,6 @@ export class HeroEditComponent implements OnInit {
 
   constructor(
     private store: Store<State>,
-    private heroService: HeroService,
     private fb: FormBuilder
   ) {
     const validationMessages = {
@@ -105,9 +103,7 @@ export class HeroEditComponent implements OnInit {
   deleteHero(hero: Hero): void {
     if (hero && hero.id) {
       if (confirm(`Do you really want to delete the hero: ${hero.name}?`)) {
-        this.heroService.deleteHero(hero.id).subscribe({
-          next: () => this.store.dispatch(HeroActions.clearCurrentHero()),
-        });
+        this.store.dispatch(HeroActions.deleteHero({ heroId: hero.id }));
       }
     } else {
       this.store.dispatch(HeroActions.clearCurrentHero());
@@ -120,12 +116,7 @@ export class HeroEditComponent implements OnInit {
         const hero = { ...originalHero, ...this.heroForm.value };
 
         if (hero.id === 0) {
-          this.heroService.createHero(hero).subscribe({
-            next: (hero) =>
-              this.store.dispatch(
-                HeroActions.setCurrentHero({ currentHeroId: hero.id })
-              ),
-          });
+          this.store.dispatch(HeroActions.createHero({ hero }));
         } else {
           this.store.dispatch(HeroActions.updateHero({ hero }));
         }

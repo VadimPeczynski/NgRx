@@ -32,4 +32,28 @@ export class HeroEffects {
       )
     );
   });
+
+  createHero$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(HeroActions.createHero),
+      concatMap((action) =>
+        this.heroService.createHero(action.hero).pipe(
+          map((hero) => HeroActions.createHeroSuccess({ hero })),
+          catchError((error) => of(HeroActions.createHeroFailure({ error })))
+        )
+      )
+    );
+  });
+
+  deleteHero$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(HeroActions.deleteHero),
+      mergeMap((action) =>
+        this.heroService.deleteHero(action.heroId).pipe(
+          map(() => HeroActions.deleteHeroSuccess({ heroId: action.heroId })),
+          catchError((error) => of(HeroActions.deleteHeroFailure({ error })))
+        )
+      )
+    );
+  });
 }

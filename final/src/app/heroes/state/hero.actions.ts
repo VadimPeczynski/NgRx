@@ -30,3 +30,29 @@ export const updateHeroFailure = createAction(
   '[Hero] Update Hero Failure',
   props<{ error: string }>()
 );
+
+export const createHero = createAction(
+  '[Hero] Create Hero',
+  props<{ hero: Hero }>()
+);
+export const createHeroSuccess = createAction(
+  '[Hero] Create Hero Success',
+  props<{ hero: Hero }>()
+);
+export const createHeroFailure = createAction(
+  '[Hero] Create Hero Failure',
+  props<{ error: string }>()
+);
+
+export const deleteHero = createAction(
+  '[Hero] Delete Hero',
+  props<{ heroId: number }>()
+);
+export const deleteHeroSuccess = createAction(
+  '[Hero] Delete Hero Success',
+  props<{ heroId: number }>()
+);
+export const deleteHeroFailure = createAction(
+  '[Hero] Delete Hero Failure',
+  props<{ error: string }>()
+);
