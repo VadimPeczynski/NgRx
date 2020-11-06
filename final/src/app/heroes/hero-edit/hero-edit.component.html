@@ -1,0 +1,113 @@
+<mat-card
+  *ngIf="hero$ | async as hero"
+  class="card"
+>
+  <mat-card-header>
+    <mat-card-title>{{ pageTitle }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form novalidate (ngSubmit)="saveHero(hero)" [formGroup]="heroForm">
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label for="nameId">Hero Name </mat-label>
+        <input
+          matInput
+          [ngClass]="{ 'is-invalid': displayMessage.name }"
+          class="form-control"
+          id="nameId"
+          type="text"
+          placeholder="Name (required)"
+          formControlName="name"
+          (blur)="blur()"
+        />
+        <mat-error *ngIf="displayMessage.name">
+          <span>
+            {{ displayMessage.name }}
+          </span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label for="teamId">Team </mat-label>
+        <input
+          matInput
+          [ngClass]="{ 'is-invalid': displayMessage.team }"
+          class="form-control"
+          id="teamId"
+          type="text"
+          placeholder="Code (required)"
+          formControlName="team"
+          (blur)="blur()"
+        />
+        <mat-error *ngIf="displayMessage.team">
+          <span>
+            {{ displayMessage.team }}
+          </span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label for="strengthId">Strength (1-5)</mat-label>
+        <input
+          matInput
+          [ngClass]="{ 'is-invalid': displayMessage.strength }"
+          class="form-control"
+          id="strengthId"
+          type="text"
+          placeholder="Strength"
+          formControlName="strength"
+        />
+        <mat-error *ngIf="displayMessage.strength">
+          <span>
+            {{ displayMessage.strength }}
+          </span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="form-field" appearance="outline">
+        <mat-label for="descriptionId">Description</mat-label>
+        <textarea
+          matInput
+          [ngClass]="{ 'is-invalid': displayMessage.description }"
+          class="form-control"
+          id="descriptionId"
+          placeholder="Description"
+          rows="3"
+          formControlName="description"
+        >
+        </textarea>
+        <mat-error *ngIf="displayMessage.description">
+          <span>
+            {{ displayMessage.description }}
+          </span>
+        </mat-error>
+      </mat-form-field>
+
+      <button
+        mat-raised-button
+        color="primary"
+        type="submit"
+        style="width: 80px; margin-right: 10px"
+        [disabled]="!heroForm.valid || !heroForm.dirty"
+      >
+        Save
+      </button>
+      <button
+        mat-raised-button
+        type="button"
+        style="width: 80px; margin-right: 10px"
+        (click)="cancelEdit(hero)"
+      >
+        Cancel
+      </button>
+      <button
+        mat-raised-button
+        color="warn"
+        type="button"
+        style="width: 80px"
+        (click)="deleteHero(hero)"
+      >
+        Delete
+      </button>
+    </form>
+  </mat-card-content>
+</mat-card>
