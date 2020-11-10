@@ -1,0 +1,76 @@
+1. Installing the store
+
+ng add @ngrx/store@latest
+
+2. Creating the reducer
+
+export const heroReducer = createReducer(
+{displayTeam: true},
+on(createAction('[Hero] Toggle Team Display'), state=>{
+...state,
+displayTeam: !state.displayTeam
+})
+);
+
+3.Dispatching the action
+
+this.store.dispatch({type: '[Hero] Toggle Team Display'});
+
+4. Selector
+
+this.displayTeamSub = this.store.select('heroes').subscribe(heroes=>if(heroes){this.displayTeam=heroes.displayTeam});
+
+5. Installing developer tools
+
+ng add @ngrx/store-devtools@latest
+
+6. Hero state interface:
+
+export interface HeroState {
+  displayTeam: boolean;
+  currentHero: Hero;
+  heroes: Hero[];
+}
+
+
+export interface State {
+  heroes: HeroState;
+}
+
+7. Initial state
+
+const initialState: HeroState = {
+  displayTeam: true,
+  currentHero: null,
+  heroes: []
+};
+
+8. Selectors strongly typed
+
+const getHeroFeatureState = createFeatureSelector<HeroState>('heroes');
+
+export const getDisplayTeam = createSelector(
+  getHeroFeatureState,
+  (state) => state.displayTeam
+);
+
+9. Action creators
+
+export const toggleDisplayTeam = createAction('[Hero] Toggle Team Display');
+
+export const setCurrentHero = createAction(
+  '[Hero] Set Current Hero',
+  props<{ currentHero: Hero }>()
+);
+
+10. Action with data
+
+on(
+    HeroActions.setCurrentHero,
+    (state, action): HeroState => {
+      return {
+        ...state,
+        currentHero: action.currentHero,
+      };
+    }
+  ),
