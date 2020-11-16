@@ -74,3 +74,66 @@ on(
       };
     }
   ),
+
+11. Complex actions
+
+export const loadHeroes = createAction('[Hero] Load');
+export const loadHeroesSuccess = createAction(
+  '[Hero] Load Success',
+  props<{ heroes: Hero[] }>()
+);
+export const loadHeroesFailure = createAction(
+  '[Hero] Load Failure',
+  props<{ error: string }>()
+);
+
+12. Effects - init 
+
+ng add @ngrx/effects@latest
+
+13. Create an effect
+
+loadHeroes$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(HeroActions.loadHeroes),
+      mergeMap(() =>
+        this.heroService.getHeroes().pipe(
+          map((heroes) => HeroActions.loadHeroesSuccess({ heroes })),
+          catchError((error) => of(HeroActions.loadHeroesFailure({ error })))
+        )
+      )
+    );
+  });
+
+14. Add action handlers to reducer:
+
+on(
+    HeroActions.loadHeroesSuccess,
+    (state, action): HeroState => {
+      return {
+        ...state,
+        heroes: action.heroes,
+        error: '',
+      };
+    }
+  ),
+  on(
+    HeroActions.loadHeroesFailure,
+    (state, action): HeroState => {
+      return {
+        ...state,
+        heroes: [],
+        error: action.error,
+      };
+    }
+  ),
+
+15. Registering the effect
+
+EffectsModule.forFeature([HeroEffects]),
+
+16. Using and effect
+
+this.store.dispatch(HeroActions.loadHeroes());
+
+this.heroes$ = this.store.select(getHeroes);
