@@ -7,8 +7,8 @@ ng add @ngrx/store@latest
 export const heroReducer = createReducer(
 {displayTeam: true},
 on(createAction('[Hero] Toggle Team Display'), state=>{
-...state,
-displayTeam: !state.displayTeam
+return {...state,
+displayTeam: !state.displayTeam};
 })
 );
 
