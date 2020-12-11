@@ -132,7 +132,7 @@ on(
 
 EffectsModule.forFeature([HeroEffects]),
 
-16. Using and effect
+16. Using an effect
 
 this.store.dispatch(HeroActions.loadHeroes());
 
